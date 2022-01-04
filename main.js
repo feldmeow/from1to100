@@ -3,30 +3,48 @@ let isNumber = function (n) {
   return !isNaN(parseFloat(n))
 };
 function hiddenNumber() {
-  const hiddenNum = Math.floor(Math.random() * 100);
+  const hiddenNum = Math.floor(Math.random() * 100); //генерация числа
+  let count =10
   function getNum() {
-    let number = (prompt("Угадай число от 1 до 100"));
-
+    let number = (prompt(`Угадай число от 1 до 100 (Осталось попыток: ${count})`)); //запрос числа
+    const isRetry =()=>{
+      if(confirm('Хотите сыграть ещё?')){
+        hiddenNumber();
+      }else{
+        alert('До свидания!')
+      }
+    };
     function result() {
       function alertMessage() {
         if (+number === hiddenNum) {
-          return alert("Вы угадали!")
+           alert("Вы угадали!")
+           isRetry();
         } else if (!isNumber(number)) {
-          return alert("Введи число!");
+          count-=1
+           alert("Введи число!");
         } else if (number > hiddenNum) {
-          return alert("Загаданное число меньше");
+          count-=1
+           alert("Загаданное число меньше");
         } else if (number < hiddenNum) {
-          return alert("Загаданное число больше");
+          count-=1
+           alert("Загаданное число больше");
         };
 
       };
       if (+number === hiddenNum) {
         return alertMessage();
       } else if (number === null) {
+        alert ('До свидания!')
         return false;
       } else {
         alertMessage();
-        getNum();
+        if (count>0){
+          getNum();
+
+        }else{
+          alert('Попытки закончились :(')
+          isRetry();
+        }
       }
     };
     result();
